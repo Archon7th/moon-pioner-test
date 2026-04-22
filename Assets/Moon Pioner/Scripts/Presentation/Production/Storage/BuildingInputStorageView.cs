@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using UnityEngine;
 
 namespace Presentation.Production
 {
@@ -39,11 +38,10 @@ namespace Presentation.Production
                 if (emptyPlace == null)
                 {
                     player.PlayerStorage.SetLockedTime(1f);
-                    //TODO: message about full player storage
-                    Debug.LogWarning("No empty place in storage");
+                    //Debug.LogWarning("No empty place in storage");
+                    player.ShowFloatingMessage(_soLocalizationCache.StorageNotEnoughtSpace.GetLocalizedString());
                     continue;
                 }
-                
 
                 var resourcePoint = player.PlayerStorage.RequireInputResourceFor(this);
                 if (resourcePoint == default)

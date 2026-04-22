@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using VContainer;
 
@@ -17,10 +16,15 @@ namespace Presentation.Production
 
         [SerializeField] protected BuildingView buildingView;
 
+        [SerializeField] protected FloatingMessageView floatingMessage;
+
+        protected LocalizationCache _solocalizationCache;
+
         [Inject]
-        public void Construct(ResourceFactory resourceFactory)
+        public void Construct(ResourceFactory resourceFactory, LocalizationCache localizationCache)
         {
             _resourceFactory = resourceFactory;
+            _solocalizationCache = localizationCache;
         }
 
         private IProductionState _currentState;
@@ -29,7 +33,12 @@ namespace Presentation.Production
         public BuildingInputStorageView InputStorage => inputStorage;
         public BuildingOutputStorageView OutputStorage => outputStorage;
         public BuildingView BuildingView => buildingView;
+        public LocalizationCache LocalizationCache => _solocalizationCache;
 
+        public void ShowFloatingMessage(string message)
+        {
+            floatingMessage?.ShowBounceMessage(message);
+        }
 
         public void InitializeProduction()
         {
@@ -57,7 +66,7 @@ namespace Presentation.Production
         }
         public void ChangeState(IProductionState newState)
         {
-            //_currentState?.Exit(this);
+            //Debug.Log($"Production building {name} change state to {newState.GetType().Name}", buildingView);
             _currentState = newState;
             _currentState.Enter(this);
         }
@@ -99,7 +108,7 @@ namespace Presentation.Production
         {
             if (outputPoints.Length < soProductionConfig.OutputResources.Length)
             {
-                Debug.LogError("Critical: Not enough output points for production output resources");
+                Debug.LogError("Critical: Not enough output points for production output resources", this);
                 return;
             }
             for (int i = 0; i < soProductionConfig.OutputResources.Length; i++)
@@ -125,6 +134,13 @@ namespace Presentation.Production
             }
         }
 
+        internal void HandleUpdateStorages()
+        {
+            if (inputStorage != null)
+                inputStorage.RecalculateAmount();
+            if (outputStorage != null)
+                outputStorage.RecalculateAmount();
 
+        }
     }
 }

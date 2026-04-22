@@ -1,10 +1,8 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 using VContainer.Unity;
 
 public sealed class GamePresenter : IStartable, ITickable
 {
-
     public GamePresenter()
     {
     }

@@ -13,8 +13,6 @@ namespace Presentation.Production
 
         [SerializeField] protected BuildingStoragePoint[] storagePoints;
 
-        [Inject] protected ProductionBuilding _building;
-        
         protected HashSet<PlayerView> _playersInArea = new HashSet<PlayerView>();
 
         private int _cachedAmount = -1;
@@ -36,7 +34,7 @@ namespace Presentation.Production
             var emptyPlace = FindEmptyPlace();
             if (emptyPlace == null)
             {
-                Debug.LogError("Critical: No empty place in storage", this);
+                Debug.LogError("Critical: No empty place in storage but requested", this);
                 return false;
             }
             emptyPlace.BeforeStore(resource);

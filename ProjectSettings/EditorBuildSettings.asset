@@ -9,7 +9,11 @@ EditorBuildSettings:
     path: Assets/Moon Pioner/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 7ca828e7ca759ce438722f53a4ea3ebb,
+      type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: bb9109eb83df9614aa590c0a43a675c0,
       type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: b8b02af0950ae1c4ba9d89b3bca43e6a,
       type: 3}
+    com.unity.localization.settings: {fileID: 11400000, guid: 5706961338b2f77408aec666492eef92,
+      type: 2}

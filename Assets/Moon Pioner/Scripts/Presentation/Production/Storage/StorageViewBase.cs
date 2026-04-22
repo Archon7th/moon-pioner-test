@@ -1,11 +1,13 @@
-using System.Linq;
 using UnityEngine;
+using VContainer;
 
 namespace Presentation.Production
 {
     public abstract class StorageViewBase : MonoBehaviour
     {
         protected float _lockedTime = 0;
+
+        [Inject] protected LocalizationCache _soLocalizationCache;
 
         public bool IsFull => Amount >= Capacity;
         public bool IsEmpty => Amount <= 0;

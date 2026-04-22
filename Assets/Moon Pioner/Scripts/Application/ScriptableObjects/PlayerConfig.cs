@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Localization;
 
 [CreateAssetMenu(fileName = "PlayerConfig", menuName = "Settings/PlayerConfig")]
 public sealed class PlayerConfig : ScriptableObject

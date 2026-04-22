@@ -603,6 +603,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5623560963555531033, guid: 7fe82cad36a67574a890848c16a872a8,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 330585545}
     - target: {fileID: 6395435459767066205, guid: 7fe82cad36a67574a890848c16a872a8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -712,6 +717,8 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   soPlayerConfig: {fileID: 11400000, guid: 44388116d17096143b2326b48128b8b5, type: 2}
+  soLocalizationCache: {fileID: 11400000, guid: 8b7c4ad20483a1048b4f47b22ff2ce20,
+    type: 2}
   resourcePrefabs:
   - {fileID: 6851068767414970063, guid: d242d0bd6abdee845aa6e46cc4aa6e31, type: 3}
   - {fileID: 8164884958160703918, guid: 585ca7fc29e43ff4fa3670d74de2d029, type: 3}

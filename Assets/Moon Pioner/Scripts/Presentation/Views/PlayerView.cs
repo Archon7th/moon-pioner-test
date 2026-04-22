@@ -18,11 +18,20 @@ namespace Presentation.Views
         [Header("References")]
         [SerializeField] private PlayerStorageView playerStorageView;
 
-        public PlayerStorageView PlayerStorage => playerStorageView;
+        [SerializeField] private FloatingMessageView floatingMessage;
 
+        public PlayerStorageView PlayerStorage => playerStorageView;
+        
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
+
+            ShowFloatingMessage("dsa sadaas");
+        }
+
+        public void ShowFloatingMessage(string message)
+        {
+            floatingMessage?.ShowBounceMessage(message);
         }
 
         public void FixedMovePlayer(Vector3 offset)
