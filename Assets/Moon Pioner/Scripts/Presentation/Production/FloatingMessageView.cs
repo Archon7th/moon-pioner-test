@@ -36,6 +36,7 @@
             {
                 Camera camera = Camera.main;
                 messageRect.position = camera.WorldToScreenPoint(transform.parent.position + Vector3.up);
+                _bounceSequence.SetUpdate(UpdateType.Late);
                 _bounceSequence.OnUpdate(() => {
                     messageRect.position = camera.WorldToScreenPoint(transform.parent.position + Vector3.up);
                 });

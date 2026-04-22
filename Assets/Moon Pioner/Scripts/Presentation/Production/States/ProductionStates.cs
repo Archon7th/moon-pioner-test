@@ -36,6 +36,13 @@ namespace Presentation.Production
         {
             if (building.Config.InputResources.Length > 0 && building.InputStorage != null)
             {
+                if (building.OutputStorage.IsFull)
+                {
+                    //Debug.LogWarning($"Output storage is full {building.OutputStorage.Amount}/{building.OutputStorage.Capacity}", building.OutputStorage);
+                    building.ShowFloatingMessage(building.LocalizationCache.ProductionStopNoSpace.GetLocalizedString());
+                    ResetWaitTime(1);
+                    return;
+                }
                 var inputPoints = building.InputStorage.RequireInputResources(building.Config.InputResources);
                 foreach (var inputPoint in inputPoints)
                 {
@@ -69,16 +76,8 @@ namespace Presentation.Production
 
                     }
                 }
-                if (building.OutputStorage.IsFull)
-                {
-                    //Debug.LogWarning($"Output storage is full {building.OutputStorage.Amount}/{building.OutputStorage.Capacity}", building.OutputStorage);
-                    building.ShowFloatingMessage(building.LocalizationCache.ProductionStopNoSpace.GetLocalizedString());
-                    ResetWaitTime(1);
-                }
-                else
-                {
-                    building.ChangeState(new LoadState());
-                }
+
+                building.ChangeState(new LoadState());
             }
             else if (building.OutputStorage != null)
             {
@@ -87,11 +86,10 @@ namespace Presentation.Production
                     //Debug.LogWarning($"Output storage is full {building.OutputStorage.Amount}/{building.OutputStorage.Capacity}", building.OutputStorage);
                     building.ShowFloatingMessage(building.LocalizationCache.ProductionStopNoSpace.GetLocalizedString());
                     ResetWaitTime(1);
+                    return;
                 }
-                else
-                {
-                    building.ChangeState(new ProductionState());
-                }
+
+                building.ChangeState(new ProductionState());
             }
             else
             {

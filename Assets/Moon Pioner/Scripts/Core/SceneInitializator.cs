@@ -28,6 +28,10 @@ public class SceneInitializator : IStartable
         foreach (var building in buildingsOnScene)
         {
             _resolver.Inject(building);
+            if (building.InputStorage != null)
+                _resolver.Inject(building.InputStorage);
+            if (building.OutputStorage != null)
+                _resolver.Inject(building.OutputStorage);
             _productionService.AddBuilding(building);
         }
 

@@ -36,7 +36,6 @@ public sealed class GameLifetimeScope : LifetimeScope
         builder.RegisterComponentInHierarchy<CameraView>();
         builder.RegisterComponentInHierarchy<JoystickView>();
         builder.RegisterComponentInHierarchy<PlayerView>();
-        builder.RegisterComponentInHierarchy<BuildingStorageView>();
 
         builder.RegisterEntryPoint<SceneInitializator>();
     }

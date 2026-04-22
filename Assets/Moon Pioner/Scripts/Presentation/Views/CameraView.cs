@@ -15,6 +15,7 @@ namespace Presentation.Views
         [Header("Look Ahead (Prediction)")]
         [SerializeField] private float leadDistance = 2f;
         [SerializeField] private float leadSmoothTime = 0.4f;
+        [SerializeField] private float leadCameraFlow = 0.5f;
 
         [Range(0f, 90f)]
         [SerializeField] private float deadzoneAngle = 25f;
@@ -60,7 +61,7 @@ namespace Presentation.Views
             Vector3 targetPosition = playerTransform.position + offset;
             transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref _currentVelocity, smoothTime);
 
-            transform.LookAt(playerTransform.position + _smoothLead * 0.1f);
+            transform.LookAt(playerTransform.position + _smoothLead * leadCameraFlow);
         }
 
         private void OnDrawGizmos()
