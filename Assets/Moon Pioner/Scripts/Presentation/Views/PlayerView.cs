@@ -25,8 +25,6 @@ namespace Presentation.Views
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
-
-            ShowFloatingMessage("dsa sadaas");
         }
 
         public void ShowFloatingMessage(string message)
