@@ -10,6 +10,7 @@ using VContainer.Unity;
 public sealed class GameLifetimeScope : LifetimeScope
 {
     [SerializeField] private PlayerConfig soPlayerConfig;
+    [SerializeField] private LocalizationCache soLocalizationCache;
 
     [SerializeField] private ResourceView[] resourcePrefabs;
 
@@ -19,6 +20,7 @@ public sealed class GameLifetimeScope : LifetimeScope
     protected override void Configure(IContainerBuilder builder)
     {
         builder.RegisterInstance(soPlayerConfig);
+        builder.RegisterInstance(soLocalizationCache);
         builder.RegisterInstance(_playerTransformVar);
         builder.RegisterInstance(_joystickInputVar);
 
@@ -34,6 +36,7 @@ public sealed class GameLifetimeScope : LifetimeScope
         builder.RegisterComponentInHierarchy<CameraView>();
         builder.RegisterComponentInHierarchy<JoystickView>();
         builder.RegisterComponentInHierarchy<PlayerView>();
+        builder.RegisterComponentInHierarchy<BuildingStorageView>();
 
         builder.RegisterEntryPoint<SceneInitializator>();
     }

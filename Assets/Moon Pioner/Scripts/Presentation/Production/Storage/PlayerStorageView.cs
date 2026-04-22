@@ -1,7 +1,5 @@
-using System;
 using System.Linq;
 using UnityEngine;
-using VContainer;
 
 namespace Presentation.Production
 {
@@ -34,7 +32,7 @@ namespace Presentation.Production
             var emptyPlace = FindEmptyPlace();
             if (emptyPlace == null)
             {
-                Debug.LogError("No empty place in storage");
+                Debug.LogError("Critical: No empty place in storage but requested", this);
                 return false;
             }
             emptyPlace.BeforeStore(resource);

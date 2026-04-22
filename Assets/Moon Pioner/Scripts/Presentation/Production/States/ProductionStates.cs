@@ -1,5 +1,3 @@
-using Systems;
-using UnityEditor.iOS;
 using UnityEngine;
 
 namespace Presentation.Production
@@ -30,6 +28,7 @@ namespace Presentation.Production
     {
         public void Enter(ProductionBuilding building)
         {
+            building.HandleUpdateStorages();
             ResetWaitTime(1);
         }
 
@@ -43,8 +42,8 @@ namespace Presentation.Production
                     if (inputPoint == null)
                     {
                         ResetWaitTime(1);
-                        //TODO: message about missing resources
-                        Debug.LogWarning("Missing resources for production", building);
+                        //Debug.LogWarning("Missing resources for production", building.InputStorage);
+                        building.ShowFloatingMessage(building.LocalizationCache.ProductionStopNoResouces.GetLocalizedString());
                         return;
                     }
                 }
@@ -54,6 +53,7 @@ namespace Presentation.Production
                     var emptyPlace = building.GetFreeInputPoint();
                     if (emptyPlace == null)
                     {
+                        ResetWaitTime(1);
                         Debug.LogError("Critical: No free input point", building);
                         break;
                     }
@@ -69,14 +69,23 @@ namespace Presentation.Production
 
                     }
                 }
-                building.ChangeState(new LoadState());
+                if (building.OutputStorage.IsFull)
+                {
+                    //Debug.LogWarning($"Output storage is full {building.OutputStorage.Amount}/{building.OutputStorage.Capacity}", building.OutputStorage);
+                    building.ShowFloatingMessage(building.LocalizationCache.ProductionStopNoSpace.GetLocalizedString());
+                    ResetWaitTime(1);
+                }
+                else
+                {
+                    building.ChangeState(new LoadState());
+                }
             }
             else if (building.OutputStorage != null)
             {
                 if (building.OutputStorage.IsFull)
                 {
-                    //TODO: message about full output storage
-                    Debug.LogWarning($"Output storage is full {building.OutputStorage.Amount}/{building.OutputStorage.Capacity}", building.OutputStorage);
+                    //Debug.LogWarning($"Output storage is full {building.OutputStorage.Amount}/{building.OutputStorage.Capacity}", building.OutputStorage);
+                    building.ShowFloatingMessage(building.LocalizationCache.ProductionStopNoSpace.GetLocalizedString());
                     ResetWaitTime(1);
                 }
                 else
@@ -105,8 +114,8 @@ namespace Presentation.Production
         {
             if (building.OutputStorage.IsFull)
             {
-                //TODO: message about full output storage
-                Debug.LogWarning("Output storage is full", building);
+                //Debug.LogWarning("Output storage is full", building.OutputStorage);
+                building.ShowFloatingMessage(building.LocalizationCache.ProductionStopNoSpace.GetLocalizedString());
                 ResetWaitTime(1);
             }
             else if (building.CanStartProduction())

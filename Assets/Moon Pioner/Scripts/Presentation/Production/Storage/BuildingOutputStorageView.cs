@@ -1,7 +1,4 @@
-using System;
 using System.Linq;
-using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 namespace Presentation.Production
 {
@@ -25,8 +22,8 @@ namespace Presentation.Production
                 if (emptyPlace == null)
                 {
                     player.PlayerStorage.SetLockedTime(1f);
-                    //TODO: message about full player storage
-                    Debug.LogWarning("No empty place in storage");
+                    //Debug.LogWarning("No empty place in player storage");
+                    player.ShowFloatingMessage(_soLocalizationCache.PlayerNotEnoughtSpace.GetLocalizedString());
                     continue;
                 }
                 player.PlayerStorage.SetLockedTime(0.5f);
