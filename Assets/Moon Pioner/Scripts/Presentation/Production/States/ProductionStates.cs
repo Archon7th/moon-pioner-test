@@ -122,12 +122,12 @@ namespace Presentation.Production
         {
             ResetWaitTime(building.Config.ProductionTime);
             building.HandleConsumeResources();
-            //TODO: animate production process
+            building.BuildingView.StartBounce(building.Config.ProductionTime);
         }
 
         public void Update(ProductionBuilding building, float deltaTime)
         {
-            //TODO: stop animation production process
+            building.BuildingView.StopBounce();
             building.HandleProduceResources();
             building.ChangeState(new CompleteState());
         }

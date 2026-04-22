@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine;
 using VContainer;
@@ -21,6 +22,11 @@ namespace Presentation.Production
                 point.transform.localPosition = Vector3.up * i * 0.1f;
                 storagePoints[i] = point;
             }
+        }
+
+        internal BuildingStoragePoint RequireInputResourceFor(StorageViewBase inputStorage)
+        {
+            return storagePoints.LastOrDefault(point => !point.IsEmpty && inputStorage.IsAcceptedResource(point.ResourceType));
         }
 
         public override bool PutIntoStorage(ResourceView resource)

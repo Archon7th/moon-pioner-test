@@ -1,14 +1,15 @@
 using Presentation.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using VContainer;
+using static UnityEngine.UI.Image;
 
 namespace Presentation.Production
 {
     public class BuildingStorageView : StorageViewBase
     {
-        [SerializeField] protected ResourceType[] AcceptedTypes;
 
         [SerializeField] protected BuildingStoragePoint[] storagePoints;
 
@@ -18,9 +19,16 @@ namespace Presentation.Production
 
         private int _cachedAmount = -1;
 
+        protected ResourceType[] _acceptedTypes;
+
+        internal void InitializeStorage(ResourceType[] acceptedTypes)
+        {
+            _acceptedTypes = acceptedTypes;
+        }
+
         public override bool IsAcceptedResource(ResourceType resourceType)
         {
-            return AcceptedTypes.Contains(resourceType);
+            return _acceptedTypes.Contains(resourceType);
         }
 
         public override bool PutIntoStorage(ResourceView resource)

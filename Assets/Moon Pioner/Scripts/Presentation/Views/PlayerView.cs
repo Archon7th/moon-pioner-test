@@ -23,7 +23,6 @@ namespace Presentation.Views
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
-            playerStorageView?.Initialize(5);
         }
 
         public void FixedMovePlayer(Vector3 offset)

@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 namespace Presentation.Production
 {
@@ -8,17 +9,17 @@ namespace Presentation.Production
     {
         internal void ProcessOutputStorage(float deltaTime)
         {
-            if (_playersInArea.Count == 0 || Amount == 0)
+            if (_playersInArea.Count == 0 || IsEmpty)
                 return;
 
             foreach (var player in _playersInArea)
             {
+                if (player.PlayerStorage.IsLockedTime)
+                    continue;
+
                 var resourcePoint = storagePoints.LastOrDefault(point => !point.IsEmpty && !point.IsTranfered);
                 if (resourcePoint == default)
                     break;
-
-                if (player.PlayerStorage.IsLockedTime)
-                    continue;
 
                 var emptyPlace = player.PlayerStorage.FindEmptyPlace();
                 if (emptyPlace == null)

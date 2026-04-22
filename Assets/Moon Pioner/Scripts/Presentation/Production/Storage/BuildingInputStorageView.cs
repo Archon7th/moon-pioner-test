@@ -27,9 +27,41 @@ namespace Presentation.Production
 
         internal void ProcessInputStorage(float deltaTime)
         {
+            if (_playersInArea.Count == 0 || IsFull)
+                return;
 
+            foreach (var player in _playersInArea)
+            {
+                if (player.PlayerStorage.IsLockedTime)
+                    continue;
+
+                var emptyPlace = FindEmptyPlace();
+                if (emptyPlace == null)
+                {
+                    player.PlayerStorage.SetLockedTime(1f);
+                    //TODO: message about full player storage
+                    Debug.LogWarning("No empty place in storage");
+                    continue;
+                }
+                
+
+                var resourcePoint = player.PlayerStorage.RequireInputResourceFor(this);
+                if (resourcePoint == default)
+                {
+                    player.PlayerStorage.SetLockedTime(1f);
+                    break;
+                }
+
+                player.PlayerStorage.SetLockedTime(0.5f);
+                var resource = resourcePoint.ReleaseStore();
+                emptyPlace.BeforeStore(resource);
+                resource.PlayMoveAnimation(() =>
+                {
+                    emptyPlace.CompleteStore();
+                    RecalculateAmount();
+                });
+                player.PlayerStorage.RecalculateAmount();
+            }
         }
-
-
     }
 }

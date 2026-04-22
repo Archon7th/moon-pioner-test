@@ -76,6 +76,7 @@ MonoBehaviour:
   - {fileID: 7405943942029321673}
   outputPoints:
   - {fileID: 2357929708757668562}
+  buildingView: {fileID: 3256315894467864302}
 --- !u!1 &470463636416363397
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,6 +233,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 06eeffcbd89335c4ea4e9c962ad78d51, type: 3}
+--- !u!114 &3256315894467864302 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2340781741955584516, guid: 06eeffcbd89335c4ea4e9c962ad78d51,
+    type: 3}
+  m_PrefabInstance: {fileID: 958389971906770154}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2938fb6f398ae640b6cbde72060496e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &4849387846577833435 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5620666159307354417, guid: 06eeffcbd89335c4ea4e9c962ad78d51,

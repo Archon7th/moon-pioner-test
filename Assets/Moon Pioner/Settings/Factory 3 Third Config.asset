@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ProductionTime: 5
   ResourceTranferTime: 1
-  InputResources: 
-  OutputResources: 00000000
+  InputResources: 0000000001000000
+  OutputResources: 02000000

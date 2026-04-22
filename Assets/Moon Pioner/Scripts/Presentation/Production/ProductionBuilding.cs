@@ -15,6 +15,8 @@ namespace Presentation.Production
         [SerializeField] protected BuildingStoragePoint[] inputPoints;
         [SerializeField] protected BuildingStoragePoint[] outputPoints;
 
+        [SerializeField] protected BuildingView buildingView;
+
         [Inject]
         public void Construct(ResourceFactory resourceFactory)
         {
@@ -26,11 +28,17 @@ namespace Presentation.Production
         public ProductionConfig Config => soProductionConfig;
         public BuildingInputStorageView InputStorage => inputStorage;
         public BuildingOutputStorageView OutputStorage => outputStorage;
+        public BuildingView BuildingView => buildingView;
 
 
         public void InitializeProduction()
         {
             ChangeState(new IdleState());
+
+            if (inputStorage != null)
+                inputStorage.InitializeStorage(soProductionConfig.InputResources);
+            if (outputStorage != null)
+                outputStorage.InitializeStorage(soProductionConfig.OutputResources);
         }
 
         public void ProcessProduction(float deltaTime)
