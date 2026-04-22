@@ -100,6 +100,7 @@ GameObject:
   - component: {fileID: 5444844072143458396}
   - component: {fileID: 8221358543842456436}
   - component: {fileID: 5487396358493589058}
+  - component: {fileID: 4606255771838533731}
   m_Layer: 0
   m_Name: FloatingMessage
   m_TagString: Untagged
@@ -165,6 +166,29 @@ MonoBehaviour:
   canvasGroup: {fileID: 4085765125249064487}
   messageRect: {fileID: 5649363713627484045}
   messageText: {fileID: 2849749303092340331}
+--- !u!114 &4606255771838533731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3757661019107205097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 1
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 1080, y: 1920}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!1 &8901107271066237910
 GameObject:
   m_ObjectHideFlags: 0
