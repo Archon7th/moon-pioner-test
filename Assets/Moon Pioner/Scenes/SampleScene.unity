@@ -341,9 +341,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offset: {x: -2, y: 4, z: -2}
-  smoothTime: 0.2
-  leadDistance: 1
-  leadSmoothTime: 0.4
+  smoothTime: 0.15
+  leadDistance: 2
+  leadSmoothTime: 0.25
+  leadCameraFlow: 0.2
   deadzoneAngle: 5
 --- !u!1 &339811263
 GameObject:
@@ -603,6 +604,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 333628473929593930, guid: 7fe82cad36a67574a890848c16a872a8,
+        type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5623560963555531033, guid: 7fe82cad36a67574a890848c16a872a8,
         type: 3}
       propertyPath: m_Camera
