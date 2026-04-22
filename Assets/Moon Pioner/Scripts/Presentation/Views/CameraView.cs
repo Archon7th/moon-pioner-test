@@ -52,7 +52,7 @@ namespace Presentation.Views
             {
                 float lerpFactor = (angle - deadzoneAngle) / angle;
                 Vector3 targetDirection = playerForward * leadDistance;
-                _stableTargetLead = Vector3.Slerp(_stableTargetLead, targetDirection, lerpFactor * Time.deltaTime * 5f);
+                _stableTargetLead = Vector3.Slerp(_stableTargetLead, targetDirection, lerpFactor * Time.deltaTime);
             }
 
             _smoothLead = Vector3.SmoothDamp(_smoothLead, _stableTargetLead, ref _currentLeadVelocity, leadSmoothTime);
@@ -60,7 +60,7 @@ namespace Presentation.Views
             Vector3 targetPosition = playerTransform.position + offset;
             transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref _currentVelocity, smoothTime);
 
-            transform.LookAt(playerTransform.position + _smoothLead);
+            transform.LookAt(playerTransform.position + _smoothLead * 0.1f);
         }
 
         private void OnDrawGizmos()

@@ -5,7 +5,7 @@ using VContainer.Unity;
 
 namespace Systems
 {
-    public sealed class PlayerController : IFixedTickable
+    public sealed class PlayerController : IStartable, IFixedTickable
     {
         private readonly IMobileInputService _input;
         private readonly PlayerView _view;
@@ -18,6 +18,11 @@ namespace Systems
             _view = view;
             _config = config;
             _camera = camera;
+        }
+
+        public void Start()
+        {
+            _view.PlayerStorage.Initialize(_config.StorageLimit);
         }
 
         public void FixedTick()
@@ -41,5 +46,7 @@ namespace Systems
                 _view.FixedMovePlayer(Vector3.zero);
             }
         }
+
+
     }
 }
