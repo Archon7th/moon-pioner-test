@@ -6,9 +6,22 @@ namespace Presentation.Production
 {
     public class PlayerStorageView : StorageViewBase
     {
+        [SerializeField] protected BuildingStoragePoint pointPreab;
+
         protected BuildingStoragePoint[] storagePoints;
 
         private int _cachedAmount = -1;
+
+        public void Initialize(int capacity)
+        {
+            storagePoints = new BuildingStoragePoint[capacity];
+            for (int i = 0; i < capacity; i++)
+            {
+                var point = Instantiate(pointPreab, transform);
+                point.transform.localPosition = Vector3.up * i * 0.1f;
+                storagePoints[i] = point;
+            }
+        }
 
         public override bool PutIntoStorage(ResourceView resource)
         {
@@ -49,6 +62,5 @@ namespace Presentation.Production
 
         public override float Capacity => storagePoints.Length;
         public override float Amount => _cachedAmount;
-
     }
 }

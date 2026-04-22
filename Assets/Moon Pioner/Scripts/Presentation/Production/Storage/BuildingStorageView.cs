@@ -1,3 +1,5 @@
+using Presentation.Views;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using VContainer;
@@ -11,6 +13,8 @@ namespace Presentation.Production
         [SerializeField] protected BuildingStoragePoint[] storagePoints;
 
         [Inject] protected ProductionBuilding _building;
+        
+        protected HashSet<PlayerView> _playersInArea = new HashSet<PlayerView>();
 
         private int _cachedAmount = -1;
 
@@ -59,5 +63,22 @@ namespace Presentation.Production
         public override float Capacity => storagePoints.Length;
         public override float Amount => _cachedAmount;
 
+        private void OnTriggerEnter(Collider other)
+        {
+            var player = other.GetComponent<PlayerView>();
+            if (player)
+            {
+                _playersInArea.Add(player);
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            var player = other.GetComponent<PlayerView>();
+            if (player)
+            {
+                _playersInArea.Remove(player);
+            }
+        }
     }
 }

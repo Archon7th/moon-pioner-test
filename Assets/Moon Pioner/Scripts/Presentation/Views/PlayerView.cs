@@ -1,3 +1,4 @@
+using Presentation.Production;
 using Services.Scene;
 using UnityEngine;
 using VContainer;
@@ -14,9 +15,15 @@ namespace Presentation.Views
         [Header("Settings")]
         [SerializeField] private float rotationSpeed = 720f;
 
+        [Header("References")]
+        [SerializeField] private PlayerStorageView playerStorageView;
+
+        public PlayerStorageView PlayerStorage => playerStorageView;
+
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
+            playerStorageView?.Initialize(5);
         }
 
         public void FixedMovePlayer(Vector3 offset)
