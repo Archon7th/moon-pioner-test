@@ -7,8 +7,6 @@ namespace Presentation.Production
     {
         protected float _lockedTime = 0;
 
-        protected LocalizationCache _soLocalizationCache;
-
         public bool IsFull => Amount >= Capacity;
         public bool IsEmpty => Amount <= 0;
         public bool IsLockedTime => Time.time < _lockedTime;
@@ -17,12 +15,6 @@ namespace Presentation.Production
         public abstract float Amount { get; }
 
         public abstract bool PutIntoStorage(ResourceView resource);
-
-        [Inject]
-        public void Construct(LocalizationCache localizationCache)
-        {
-            _soLocalizationCache = localizationCache;
-        }
 
         public virtual bool IsAcceptedResource(ResourceType resourceType)
         {

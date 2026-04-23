@@ -187,6 +187,7 @@ GameObject:
   - component: {fileID: 8165884561142733644}
   - component: {fileID: 8578460959738934492}
   - component: {fileID: 4149051691804741826}
+  - component: {fileID: 6393782784806358778}
   m_Layer: 0
   m_Name: Store Output Area
   m_TagString: Untagged
@@ -252,7 +253,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75661acbf54f84643a45c4ab2d7c9aef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AcceptedTypes: 00000000
   storagePoints:
   - {fileID: 6104784362863402835}
   - {fileID: 4988970172959894978}
@@ -263,6 +263,23 @@ MonoBehaviour:
   - {fileID: 5431155834467020362}
   - {fileID: 8751079513424740085}
   - {fileID: 6285833120367665232}
+--- !u!114 &6393782784806358778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4130406245623657069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8da94329e32c517479a261ef31e504d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentReference:
+    TypeName: 
+  autoRun: 1
+  autoInjectGameObjects: []
+  view: {fileID: 4149051691804741826}
 --- !u!1 &5059918359710881147
 GameObject:
   m_ObjectHideFlags: 0

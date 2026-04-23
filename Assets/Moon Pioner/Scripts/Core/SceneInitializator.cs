@@ -2,7 +2,6 @@ using UnityEngine;
 using VContainer.Unity;
 using VContainer;
 using Presentation.Production;
-using UnityEngine.Rendering.VirtualTexturing;
 
 public class SceneInitializator : IStartable
 {

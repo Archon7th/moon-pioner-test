@@ -1,3 +1,5 @@
+using System;
+using UnityEditor.Build.Pipeline.Utilities;
 using UnityEngine;
 using VContainer;
 
@@ -52,16 +54,11 @@ namespace Presentation.Production
 
         public void ProcessProduction(float deltaTime)
         {
-            if (inputStorage != null)
-                inputStorage.ProcessInputStorage(deltaTime);
-            if (outputStorage != null)
-                outputStorage.ProcessOutputStorage(deltaTime);
-
             if (!soProductionConfig)
                 return;
 
-            if (_currentState.ReadyToUpdate())
-                _currentState.Update(this, deltaTime);
+            if (_currentState.ReadyToUpdate(deltaTime))
+                _currentState.Update(this);
             
         }
         public void ChangeState(IProductionState newState)
@@ -141,6 +138,17 @@ namespace Presentation.Production
             if (outputStorage != null)
                 outputStorage.RecalculateAmount();
 
+        }
+
+        internal bool CheckOutputStorageIsFull()
+        {
+            if (OutputStorage == null || OutputStorage.IsFull)
+            {
+                //Debug.LogWarning($"Output storage is full", building.OutputStorage);
+                ShowFloatingMessage(LocalizationCache.ProductionStopNoSpace.GetLocalizedString());
+                return true;
+            }
+            return false;
         }
     }
 }

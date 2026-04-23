@@ -5,42 +5,36 @@ namespace Presentation.Production
     public interface IProductionState
     {
         void Enter(ProductionBuilding building);
-        void Update(ProductionBuilding building, float deltaTime);
-        bool ReadyToUpdate();
+        void Update(ProductionBuilding building);
+        bool ReadyToUpdate(float deltaTime);
+
     }
 
-    public class TimedState
+    public abstract class BaseProductionState : IProductionState
     {
-        protected float _waitTime = 0f;
+        protected float _timer;
+        public abstract void Enter(ProductionBuilding building);
+        public abstract void Update(ProductionBuilding building);
+        public bool ReadyToUpdate(float deltaTime) => (_timer -= deltaTime) <= 0;
 
-        protected void ResetWaitTime(float time)
-        {
-            _waitTime = Time.time + time;
-        }
-
-        public bool ReadyToUpdate()
-        {
-            return Time.time > _waitTime;
-        }
+        protected void SetTimer(float time = 1) => _timer = time;
     }
 
-    public class IdleState : TimedState, IProductionState
+    public class IdleState : BaseProductionState
     {
-        public void Enter(ProductionBuilding building)
+        public override void Enter(ProductionBuilding building)
         {
             building.HandleUpdateStorages();
-            ResetWaitTime(1);
+            SetTimer();
         }
 
-        public void Update(ProductionBuilding building, float deltaTime)
+        public override void Update(ProductionBuilding building)
         {
             if (building.Config.InputResources.Length > 0 && building.InputStorage != null)
             {
-                if (building.OutputStorage.IsFull)
+                if (building.CheckOutputStorageIsFull())
                 {
-                    //Debug.LogWarning($"Output storage is full {building.OutputStorage.Amount}/{building.OutputStorage.Capacity}", building.OutputStorage);
-                    building.ShowFloatingMessage(building.LocalizationCache.ProductionStopNoSpace.GetLocalizedString());
-                    ResetWaitTime(1);
+                    SetTimer();
                     return;
                 }
                 var inputPoints = building.InputStorage.RequireInputResources(building.Config.InputResources);
@@ -48,7 +42,7 @@ namespace Presentation.Production
                 {
                     if (inputPoint == null)
                     {
-                        ResetWaitTime(1);
+                        SetTimer();
                         //Debug.LogWarning("Missing resources for production", building.InputStorage);
                         building.ShowFloatingMessage(building.LocalizationCache.ProductionStopNoResouces.GetLocalizedString());
                         return;
@@ -60,7 +54,7 @@ namespace Presentation.Production
                     var emptyPlace = building.GetFreeInputPoint();
                     if (emptyPlace == null)
                     {
-                        ResetWaitTime(1);
+                        SetTimer();
                         Debug.LogError("Critical: No free input point", building);
                         break;
                     }
@@ -81,11 +75,9 @@ namespace Presentation.Production
             }
             else if (building.OutputStorage != null)
             {
-                if (building.OutputStorage.IsFull)
+                if (building.CheckOutputStorageIsFull())
                 {
-                    //Debug.LogWarning($"Output storage is full {building.OutputStorage.Amount}/{building.OutputStorage.Capacity}", building.OutputStorage);
-                    building.ShowFloatingMessage(building.LocalizationCache.ProductionStopNoSpace.GetLocalizedString());
-                    ResetWaitTime(1);
+                    SetTimer();
                     return;
                 }
 
@@ -98,41 +90,40 @@ namespace Presentation.Production
         }
     }
 
-    public class LoadState : TimedState, IProductionState
+    public class LoadState : BaseProductionState
     {
-        public void Enter(ProductionBuilding building)
+        public override void Enter(ProductionBuilding building)
         {
             if (building.Config.InputResources.Length > 0)
             {
-                ResetWaitTime(building.Config.ResourceTranferTime);
+                SetTimer(building.Config.ResourceTranferTime);
             }
         }
 
-        public void Update(ProductionBuilding building, float deltaTime)
+        public override void Update(ProductionBuilding building)
         {
-            if (building.OutputStorage.IsFull)
+            if (building.CheckOutputStorageIsFull())
             {
-                //Debug.LogWarning("Output storage is full", building.OutputStorage);
-                building.ShowFloatingMessage(building.LocalizationCache.ProductionStopNoSpace.GetLocalizedString());
-                ResetWaitTime(1);
+                SetTimer();
+                return;
             }
-            else if (building.CanStartProduction())
+            if (building.CanStartProduction())
             {
                 building.ChangeState(new ProductionState());
             }
         }
     }
 
-    public class ProductionState : TimedState, IProductionState
+    public class ProductionState : BaseProductionState
     {
-        public void Enter(ProductionBuilding building)
+        public override void Enter(ProductionBuilding building)
         {
-            ResetWaitTime(building.Config.ProductionTime);
+            SetTimer(building.Config.ProductionTime);
             building.HandleConsumeResources();
             building.BuildingView.StartBounce(building.Config.ProductionTime);
         }
 
-        public void Update(ProductionBuilding building, float deltaTime)
+        public override void Update(ProductionBuilding building)
         {
             building.BuildingView.StopBounce();
             building.HandleProduceResources();
@@ -140,18 +131,18 @@ namespace Presentation.Production
         }
     }
 
-    public class CompleteState : TimedState, IProductionState
+    public class CompleteState : BaseProductionState
     {
-        public void Enter(ProductionBuilding building)
+        public override void Enter(ProductionBuilding building)
         {
             if (building.Config.OutputResources.Length > 0)
             {
-                ResetWaitTime(building.Config.ResourceTranferTime);
+                SetTimer(building.Config.ResourceTranferTime);
             }
             building.HandleOutputResources();
         }
 
-        public void Update(ProductionBuilding building, float deltaTime)
+        public override void Update(ProductionBuilding building)
         {
             building.ChangeState(new IdleState());
         }
@@ -164,12 +155,12 @@ namespace Presentation.Production
             Debug.LogWarning("Building entered to dummy state", building);
         }
 
-        public bool ReadyToUpdate()
+        public bool ReadyToUpdate(float deltaTime)
         {
             return false;
         }
 
-        public void Update(ProductionBuilding building, float deltaTime)
+        public void Update(ProductionBuilding building)
         {
         }
     }

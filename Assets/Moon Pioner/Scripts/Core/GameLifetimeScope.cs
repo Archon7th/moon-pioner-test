@@ -30,6 +30,7 @@ public sealed class GameLifetimeScope : LifetimeScope
 
         builder.Register<ResourceFactory>(Lifetime.Singleton).WithParameter(resourcePrefabs);
 
+        builder.Register<EraserStorageController>(Lifetime.Transient);
         builder.RegisterEntryPoint<PlayerController>();
         builder.RegisterEntryPoint<GamePresenter>();
 

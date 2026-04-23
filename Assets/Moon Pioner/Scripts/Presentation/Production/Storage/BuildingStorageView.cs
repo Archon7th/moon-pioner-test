@@ -3,21 +3,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using VContainer;
-using static UnityEngine.UI.Image;
 
 namespace Presentation.Production
 {
     public class BuildingStorageView : StorageViewBase
     {
-
         [SerializeField] protected BuildingStoragePoint[] storagePoints;
-
-        protected HashSet<PlayerView> _playersInArea = new HashSet<PlayerView>();
 
         private int _cachedAmount = -1;
 
         protected ResourceType[] _acceptedTypes;
+
+        public event Action<PlayerView> OnPlayerEntered;
+        public event Action<PlayerView> OnPlayerExited;
+
+        public BuildingStoragePoint[] StoragePoints => storagePoints;
 
         internal void InitializeStorage(ResourceType[] acceptedTypes)
         {
@@ -53,7 +53,7 @@ namespace Presentation.Production
                 if (storagePoint.IsEmpty)
                     return storagePoint;
             }
-            return null;
+            return default;
         }
 
         public void RecalculateAmount()
@@ -73,18 +73,14 @@ namespace Presentation.Production
         {
             var player = other.GetComponent<PlayerView>();
             if (player)
-            {
-                _playersInArea.Add(player);
-            }
+                OnPlayerEntered?.Invoke(player);
         }
 
         private void OnTriggerExit(Collider other)
         {
             var player = other.GetComponent<PlayerView>();
             if (player)
-            {
-                _playersInArea.Remove(player);
-            }
+                OnPlayerExited?.Invoke(player);
         }
     }
 }
