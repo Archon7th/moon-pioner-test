@@ -1,6 +1,9 @@
 ﻿using Presentation.Production;
 
-public interface IProductionService
+namespace Services.Scene
 {
-    void AddBuilding(ProductionBuilding building);
+    public interface IProductionService
+    {
+        void AddBuilding(ProductionBuilding building);
+    }
 }

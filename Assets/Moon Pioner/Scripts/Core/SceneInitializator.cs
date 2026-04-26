@@ -2,6 +2,7 @@ using UnityEngine;
 using VContainer.Unity;
 using VContainer;
 using Presentation.Production;
+using Services.Scene;
 
 public class SceneInitializator : IStartable
 {
